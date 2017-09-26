@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="horizontal" android:padding="10dp" android:gravity="center_vertical"
+    >
+    <TextView
+        android:id="@+id/daily_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:layout_gravity="center_vertical"
+        />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        >
+        <ImageView
+            android:id="@+id/daily_image"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_toRightOf="@+id/daily_date"
+            />
+        <TextView
+            android:id="@+id/daily_weather"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_toRightOf="@+id/daily_image"
+            android:layout_marginLeft="15dp"
+            android:layout_gravity="center_vertical"
+            />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/daily_high_low"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:textSize="20dp"
+        />
+</RelativeLayout>
