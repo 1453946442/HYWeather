@@ -36,7 +36,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private Context context;
     private List<CommonBean> weatherList = new ArrayList<>();
     private boolean flag;
-    private List<String> checked = new ArrayList<>();
+//    private List<String> checked = new ArrayList<>();
 
     private final String TODAY = "今天";
     private final String TOMORROW = "明天";
@@ -55,6 +55,10 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     public void addWeatherList(CommonBean commonBean) {
         weatherList.add(commonBean);
+    }
+
+    public List<CommonBean> getWeatherList() {
+        return weatherList;
     }
 
     public void clearList() {
@@ -113,25 +117,13 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                             callback.onItemClick(nowWeatherBean.getCityId());
                     }
                 });
-
-                ((CityListHolder) holder).checkBox.setTag(position);
-//                checked.add(nowWeatherBean.isChecked() + "");
-//                for(int i = 0; i < getItemCount() - 1; i++)
-//                    checked. = "true";
-//
-//                setCheckAllCallback(new CheckAllCallback() {
-//                    @Override
-//                    public void checkAll() {
-//                        if(checked.equals("false")) {
-//                            for(int i = 0; i < getItemCount()-1; i++) {
-//                                ((CityListHolder) holder).checkBox.setChecked(true);
-//                            }
-//                        } else {
-//                            ((CityListHolder) holder).checkBox.setChecked(false);
-//                        }
-//                        notifyDataSetChanged();
-//                    }
-//                });
+                ((CityListHolder) holder).checkBox.setChecked(nowWeatherBean.isChecked());
+                ((CityListHolder) holder).checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        nowWeatherBean.setChecked(isChecked);
+                    }
+                });
                 break;
             case -1:
                 NowWeatherBean nowBean = (NowWeatherBean) weatherList.get(position);
@@ -222,12 +214,10 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     public interface CheckAllCallback {
-        void checkAll();
+        void checkAll(List<CommonBean> commonBeanList);
     }
     private CheckAllCallback checkAllCallback;
-    public CheckAllCallback getCheckAllCallback() {
-        return checkAllCallback;
-    }
+
     public void setCheckAllCallback(CheckAllCallback checkAllCallback) {
         this.checkAllCallback = checkAllCallback;
     }
