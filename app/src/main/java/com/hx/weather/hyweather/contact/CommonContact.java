@@ -36,7 +36,7 @@ public interface CommonContact {
     interface Presenter {
         void detachView();
 
-        void operateCityId(String cityId);
+        void addCityId(String cityId);
     }
 
     interface CommonCallback { void onResponse(String s); }

@@ -51,6 +51,7 @@ public class SearchActivity extends AppCompatActivity implements SearchContact.S
             public void onItemClick(final String cityId) {
                 searchPresenter.setCityId(cityId);
                 searchPresenter.testCity();
+//                returnMainPage(cityId);
             }
         });
 

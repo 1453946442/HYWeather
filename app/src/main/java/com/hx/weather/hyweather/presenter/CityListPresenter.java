@@ -1,6 +1,7 @@
 package com.hx.weather.hyweather.presenter;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.hx.weather.hyweather.bean.NowWeatherBean;
@@ -19,6 +20,7 @@ public class CityListPresenter implements CityListContact.CityListPresenter {
     private CityListContact.CityListView mActivity;
     private CommonContact.Model mModel;
     private NowWeatherBean nowWeatherBean;
+    private final String TAG = "CityListPresenter";
 
     @Override
     public void attachView(@NonNull ShowCityListActivity view) {
@@ -54,16 +56,36 @@ public class CityListPresenter implements CityListContact.CityListPresenter {
     }
 
     @Override
+    public void deleteCityId(String cityId) {
+        if(!SPUtil.getString("list").equals("")) {
+            String list = SPUtil.getString("list");
+            int cityId_Index = list.indexOf(cityId);
+            int sign_Index = list.indexOf(",", cityId_Index);
+            if(sign_Index == -1) {
+                if(cityId_Index == 0) {
+                    list = "";
+                } else {
+                    list = list.substring(0, cityId_Index - 1);
+                }
+            } else {
+                list = list.substring(0, cityId_Index) + list.substring(sign_Index, list.length() - 1);
+            }
+            SPUtil.putString("list", list);
+        }
+    }
+
+    @Override
     public void detachView() {
         mActivity = null;
     }
 
     @Override
-    public void operateCityId(String cityId) {
+    public void addCityId(String cityId) {
         if(SPUtil.getString("list").equals("")) {
             SPUtil.putString("list", cityId);
         } else {
-            SPUtil.putString("list", SPUtil.getString("list") + "," + cityId);
+            if (!SPUtil.getString("list").contains(cityId))
+                SPUtil.putString("list", SPUtil.getString("list") + "," + cityId);
         }
     }
 }

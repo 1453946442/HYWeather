@@ -17,7 +17,7 @@ public interface WeatherContact {
         void setCityId(String cityId);
         void getData();
 
-        void operateCityId(String cityId);
+        void addCityId(String cityId);
     }
 
 }

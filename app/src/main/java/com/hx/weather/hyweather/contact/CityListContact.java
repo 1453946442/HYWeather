@@ -19,5 +19,7 @@ public interface CityListContact {
 
         void returnCityId(String cityId);
         void getNowData(String[] temp);
+
+        void deleteCityId(String cityId);
     }
 }

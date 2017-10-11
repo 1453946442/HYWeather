@@ -32,11 +32,12 @@ public class SearchPresenter implements SearchContact.SearchPresenter {
     }
 
     @Override
-    public void operateCityId(String cityId) {
+    public void addCityId(String cityId) {
         if(SPUtil.getString("list").equals("")) {
             SPUtil.putString("list", cityId);
         } else {
-            SPUtil.putString("list", SPUtil.getString("list") + "," + cityId);
+            if (!SPUtil.getString("list").contains(cityId))
+                SPUtil.putString("list", SPUtil.getString("list") + "," + cityId);
         }
     }
 
@@ -71,6 +72,7 @@ public class SearchPresenter implements SearchContact.SearchPresenter {
             public void onResponse(String s) {
                 if(s.equals("true")) {
                     mActivity.returnMainPage(mModel.getCityId());
+                    addCityId(mModel.getCityId());
                 } else {
                     mActivity.showToast("该城市没有具体天气数据");
                 }

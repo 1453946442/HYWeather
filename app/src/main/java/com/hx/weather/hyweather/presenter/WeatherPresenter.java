@@ -66,13 +66,12 @@ public class WeatherPresenter implements WeatherContact.WeatherPresenter {
     }
 
     @Override
-    public void operateCityId(String cityId) {
-        if(!SPUtil.getString("list").contains(cityId)) {
-            if (SPUtil.getString("list").equals("")) {
-                SPUtil.putString("list", cityId);
-            } else {
+    public void addCityId(String cityId) {
+        if(SPUtil.getString("list").equals("")) {
+            SPUtil.putString("list", cityId);
+        } else {
+            if (!SPUtil.getString("list").contains(cityId))
                 SPUtil.putString("list", SPUtil.getString("list") + "," + cityId);
-            }
         }
     }
 }

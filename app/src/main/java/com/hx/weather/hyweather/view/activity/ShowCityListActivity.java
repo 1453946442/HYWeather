@@ -11,11 +11,14 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.hx.weather.hyweather.R;
+import com.hx.weather.hyweather.bean.NowWeatherBean;
 import com.hx.weather.hyweather.view.recyclerView.WeatherAdapter;
 import com.hx.weather.hyweather.contact.CityListContact;
 import com.hx.weather.hyweather.bean.CommonBean;
 import com.hx.weather.hyweather.presenter.CityListPresenter;
 import com.hx.weather.hyweather.util.SPUtil;
+
+import java.util.List;
 
 
 /**
@@ -29,7 +32,7 @@ public class ShowCityListActivity extends AppCompatActivity implements View.OnCl
     private RecyclerView recyclerView;
     private CityListPresenter cityListPresenter;
 
-    private int RESULT_SEARCH_CODE = 101;
+    private int RESULT_CITY_CODE = 101;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,9 +55,7 @@ public class ShowCityListActivity extends AppCompatActivity implements View.OnCl
 
         cityListPresenter = new CityListPresenter();
         cityListPresenter.attachView(this);
-        if(getIntent().getExtras() != null) {
-            cityListPresenter.getNowData(getIntent().getStringExtra("list").split(","));
-        }
+        cityListPresenter.getNowData(getCityList());
 
         weatherAdapter.setCallback(new WeatherAdapter.Callback() {
             @Override
@@ -110,12 +111,39 @@ public class ShowCityListActivity extends AppCompatActivity implements View.OnCl
     }
 
     public void delete() {
-
+        boolean flag = false;
+        List<CommonBean> commonBeanList = weatherAdapter.getWeatherList();
+        for(int i = 0; i < commonBeanList.size(); i++) {
+            // 有打勾选项，删除
+            if(((NowWeatherBean)commonBeanList.get(i)).isChecked()) {
+                flag = true;
+                //删除操作
+                cityListPresenter.deleteCityId(((NowWeatherBean) commonBeanList.get(i)).getCityId());
+                commonBeanList.remove(i);
+                notifyAdapter();
+                showToast("删除成功");
+            }
+        }
+        //循环结束，没有打勾选项，toast显示
+        if(!flag)
+            showToast("没有可删除选项");
     }
 
     public void checkAll() {
-//        weatherAdapter.getCheckAllCallback();
-//        weatherAdapter.
+        boolean flag = false;
+        List<CommonBean> commonBeanList = weatherAdapter.getWeatherList();
+        for(int i = 0; i < commonBeanList.size(); i++) {
+            // 没有打勾选项
+            if(!((NowWeatherBean)commonBeanList.get(i)).isChecked()) {
+                flag = true;
+                break;
+            }
+        }
+        // 循环结束，得知是否所有选项为打勾状态，改变所有选项状态
+        for (int i = 0; i < commonBeanList.size(); i++) {
+            ((NowWeatherBean) commonBeanList.get(i)).setChecked(flag);
+        }
+        notifyAdapter();
     }
 
     public void add() {
@@ -128,11 +156,7 @@ public class ShowCityListActivity extends AppCompatActivity implements View.OnCl
         weatherAdapter.clearList();
         Intent intent = new Intent();
         intent.putExtra("city", cityId);
-        setResult(RESULT_SEARCH_CODE, intent);
+        setResult(RESULT_CITY_CODE, intent);
         finish();
     }
-
-//    public interface CheckAllCallBack {
-//        void
-//    }
 }
