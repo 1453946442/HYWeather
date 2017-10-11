@@ -1,6 +1,7 @@
 package com.hx.weather.hyweather.view.recyclerView;
 
 import android.content.Context;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -175,13 +176,78 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 });
                 break;
             case 2:
-                SuggestionWeatherBean suggestionBean = (SuggestionWeatherBean) weatherList.get(position);
+                final SuggestionWeatherBean suggestionBean = (SuggestionWeatherBean) weatherList.get(position);
+                ((SuggestionHolder) holder).comfor.setText(suggestionBean.getComf_brf());
                 ((SuggestionHolder) holder).car_washing.setText(suggestionBean.getCw_brf());
                 ((SuggestionHolder) holder).dressing.setText(suggestionBean.getDrsg_brf());
                 ((SuggestionHolder) holder).flu.setText(suggestionBean.getFlu_brf());
                 ((SuggestionHolder) holder).sport.setText(suggestionBean.getSport_brf());
                 ((SuggestionHolder) holder).travel.setText(suggestionBean.getTrav_brf());
                 ((SuggestionHolder) holder).uv.setText(suggestionBean.getUv_brf());
+                ((SuggestionHolder) holder).comfor.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        new AlertDialog.Builder(context)
+                                .setMessage(suggestionBean.getComf_txt())
+                                .setPositiveButton("确定", null)
+                                .show();
+                    }
+                });
+                ((SuggestionHolder) holder).car_washing.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        new AlertDialog.Builder(context)
+                                .setMessage(suggestionBean.getCw_txt())
+                                .setPositiveButton("确定", null)
+                                .show();
+                    }
+                });
+                ((SuggestionHolder) holder).dressing.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        new AlertDialog.Builder(context)
+                                .setMessage(suggestionBean.getDrsg_txt())
+                                .setPositiveButton("确定", null)
+                                .show();
+                    }
+                });
+                ((SuggestionHolder) holder).flu.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        new AlertDialog.Builder(context)
+                                .setMessage(suggestionBean.getFlu_txt())
+                                .setPositiveButton("确定", null)
+                                .show();
+                    }
+                });
+                ((SuggestionHolder) holder).sport.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        new AlertDialog.Builder(context)
+                                .setMessage(suggestionBean.getSport_txt())
+                                .setPositiveButton("确定", null)
+                                .show();
+                    }
+                });
+                ((SuggestionHolder) holder).travel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        new AlertDialog.Builder(context)
+                                .setMessage(suggestionBean.getTrav_txt())
+                                .setPositiveButton("确定", null)
+                                .show();
+                    }
+                });
+                ((SuggestionHolder) holder).uv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        new AlertDialog.Builder(context)
+                                .setMessage(suggestionBean.getUv_txt())
+                                .setPositiveButton("确定", null)
+                                .show();
+                    }
+                });
+
                 break;
             default:break;
         }
