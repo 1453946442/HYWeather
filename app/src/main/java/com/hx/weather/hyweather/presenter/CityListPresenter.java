@@ -57,6 +57,7 @@ public class CityListPresenter implements CityListContact.CityListPresenter {
 
     @Override
     public void deleteCityId(String cityId) {
+        Log.v(TAG, "list_Start: " + SPUtil.getString("list"));
         if(!SPUtil.getString("list").equals("")) {
             String list = SPUtil.getString("list");
             int cityId_Index = list.indexOf(cityId);
@@ -68,8 +69,9 @@ public class CityListPresenter implements CityListContact.CityListPresenter {
                     list = list.substring(0, cityId_Index - 1);
                 }
             } else {
-                list = list.substring(0, cityId_Index) + list.substring(sign_Index, list.length() - 1);
+                list = list.substring(0, cityId_Index) + list.substring(sign_Index + 1, list.length());
             }
+            Log.v(TAG, "list_End: "+list);
             SPUtil.putString("list", list);
         }
     }
